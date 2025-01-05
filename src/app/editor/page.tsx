@@ -1,15 +1,8 @@
-import React, { useState } from 'react';
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
+import Editor from '@/components/ui/editor';
 
-function MyComponent() {
-  const [value, setValue] = useState('');
 
+export default function MyComponent() {
   return (
-    <ReactQuill
-           value={formik.values.message}
-           onChange={onChangeHandler}
-           placeholder="Enter the message..........."
-      />
+    <Editor />
   )
 }
