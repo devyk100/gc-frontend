@@ -4,12 +4,13 @@ import { cva } from "class-variance-authority"
 import { ChevronDown } from "lucide-react"
 
 import { cn } from "@/lib/utils"
+import { ModeToggle } from "./dark-mode-toggle"
 
 const NavigationMenu = React.forwardRef<
   React.ElementRef<typeof NavigationMenuPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitive.Root>
 >(({ className, children, ...props }, ref) => (
-  <div className="border-b-[0.5px] flex items-center justify-center p-[2px]">
+  <div className="border-b-[0.5px] flex items-center justify-center p-[5px] md:justify-between md:px-4 lg:px-60 xl:px-72 2xl:px-96">
     <NavigationMenuPrimitive.Root
       ref={ref}
       className={cn(
@@ -20,7 +21,9 @@ const NavigationMenu = React.forwardRef<
       >
       {children}
       <NavigationMenuViewport />
-    </NavigationMenuPrimitive.Root>
+      <ModeToggle/>
+      </NavigationMenuPrimitive.Root>
+    <h1 className="hidden md:block px-3 text-xl font-bold">GengoConnect</h1>
     </div>
 ))
 NavigationMenu.displayName = NavigationMenuPrimitive.Root.displayName
@@ -32,7 +35,7 @@ const NavigationMenuList = React.forwardRef<
   <NavigationMenuPrimitive.List
     ref={ref}
     className={cn(
-      "group flex flex-1 list-none items-center justify-center space-x-1",
+      "group flex flex-1 list-none items-center justify-center space-x-0 md:space-x-2",
       className
     )}
     {...props}
