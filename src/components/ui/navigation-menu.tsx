@@ -10,7 +10,7 @@ const NavigationMenu = React.forwardRef<
   React.ElementRef<typeof NavigationMenuPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitive.Root>
 >(({ className, children, ...props }, ref) => (
-  <div className="border-b-[0.5px] flex items-center justify-center p-[5px] md:justify-between md:px-4 lg:px-60 xl:px-72 2xl:px-96">
+  <div className="border-b-[0.5px] flex items-center justify-center p-[10px] md:justify-between md:px-4 lg:px-60 xl:px-72 2xl:px-96">
     <NavigationMenuPrimitive.Root
       ref={ref}
       className={cn(
@@ -23,7 +23,7 @@ const NavigationMenu = React.forwardRef<
       <NavigationMenuViewport />
       <ModeToggle/>
       </NavigationMenuPrimitive.Root>
-    <h1 className="hidden md:block px-3 text-xl font-bold">GengoConnect</h1>
+    <h1 className="hidden md:block px-3 text-xl font-bold bg-gradient-to-b from-blue-300 to-blue-500 text-transparent bg-clip-text">GengoConnect</h1>
     </div>
 ))
 NavigationMenu.displayName = NavigationMenuPrimitive.Root.displayName
