@@ -19,6 +19,7 @@ enum AuthType {
   Email
 }
 
+
 model User {
   id    String   @id @default(uuid())
   username    String   @unique
