@@ -46,7 +46,8 @@ export async function signUpActionFromGoogleFlow({email, name, image}: {
         // email is always unique, so it throws error only if it is not present
         await prisma.user.findUniqueOrThrow({
             where: {
-                email: email
+                email: email,
+                authType: "Google"
             }
         })
         return true;

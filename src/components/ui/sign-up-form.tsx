@@ -3,7 +3,6 @@ import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { Button } from "@/components/ui/button"
-import Image from 'next/image';
 import {
     Form,
     FormControl,
@@ -14,8 +13,6 @@ import {
     FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { Separator } from "./separator"
-import { signIn } from "next-auth/react"
 import debounce from "lodash.debounce"
 import { signUpActionFromForm } from "@/actions/sign-up"
 import { toast } from "sonner"

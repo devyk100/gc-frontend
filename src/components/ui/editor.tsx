@@ -1,5 +1,4 @@
 "use client"
-// import './styles.scss'
 
 import { Color } from '@tiptap/extension-color'
 import Image from '@tiptap/extension-image'
@@ -195,6 +194,7 @@ const MenuBar = () => {
 
 const extensions = [
   Color.configure({ types: [TextStyle.name, ListItem.name] }),
+  //@ts-ignore
   TextStyle.configure({ types: [ListItem.name] }),
   StarterKit.configure({
     bulletList: {
