@@ -1,6 +1,9 @@
 
 import { Button } from "@/components/ui/button";
 import { prisma } from "@/lib/prisma";
+
+export const dynamic = 'force-dynamic';
+
 export default async function Home() {
   const resp = await prisma.user.findMany({});
   console.log(resp)

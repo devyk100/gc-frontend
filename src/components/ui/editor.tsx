@@ -194,7 +194,7 @@ const MenuBar = () => {
 
 const extensions = [
   Color.configure({ types: [TextStyle.name, ListItem.name] }),
-  //@ts-ignore
+  //@ts-expect-error something
   TextStyle.configure({ types: [ListItem.name] }),
   StarterKit.configure({
     bulletList: {
@@ -213,7 +213,7 @@ const content = `
 some trash inside
 `
 
-export default () => {
+export default function Editor () {
   return (
     <EditorProvider slotBefore={<MenuBar />} extensions={extensions} content={content}></EditorProvider>
   )

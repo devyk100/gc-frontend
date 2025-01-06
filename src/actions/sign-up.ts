@@ -16,7 +16,7 @@ export async function signUpActionFromForm({email, username, password, name}: {
     console.log(email, name, password, username)
     try{
         const hashedPassword = await hashPassword(password);
-        const user = await prisma.user.create({
+        await prisma.user.create({
             data: {
                 email: email,
                 name: name,
@@ -29,7 +29,7 @@ export async function signUpActionFromForm({email, username, password, name}: {
         return {
             success: true
         }
-    } catch(error){
+    } catch{
         console.log("Error while creating a user")
         return {
             success: false
@@ -51,7 +51,7 @@ export async function signUpActionFromGoogleFlow({email, name, image}: {
             }
         })
         return true;
-    } catch (error) {
+    } catch {
         try {
             const user = await prisma.user.create({
                 data: {
@@ -65,7 +65,7 @@ export async function signUpActionFromGoogleFlow({email, name, image}: {
             })
             console.log("created", user)
             return true;
-        } catch(error) {
+        } catch {
             return false
         }
     }

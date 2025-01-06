@@ -8,6 +8,7 @@ const NextThemesProvider = dynamic(
 	}
 )
 
+// @ts-expect-error hha
 import { type ThemeProviderProps } from 'next-themes/dist/types'
 import dynamic from 'next/dynamic'
 

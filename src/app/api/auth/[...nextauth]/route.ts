@@ -20,21 +20,23 @@ const handler = NextAuth({
             })
             return canProceed;
           }
-          // console.log("user", user)
-          // console.log("account", account)
-          // console.log("profile", profile)
-          // console.log("email", email)
-          // console.log("credentials", credentials)
+          console.log("user", user)
+          console.log("account", account)
+          console.log("profile", profile)
+          console.log("email", email)
+          console.log("credentials", credentials)
           return true
         },
         async redirect({ url, baseUrl }) {
+          console.log(url)
           return baseUrl
         },
         async session({ session, token, user }) {
+          console.log(token, user)
           return session
         },
         async jwt({ token, user, account, profile, isNewUser }) {
-            // console.log(user, token, account, isNewUser)
+            console.log(user, token, account, isNewUser, profile)
           return token
         }
       },
