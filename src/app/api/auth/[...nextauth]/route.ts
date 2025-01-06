@@ -23,6 +23,9 @@ const handler = NextAuth({
             console.log(user, token, account, isNewUser)
           return token
         }
+      },
+      pages: {
+        signIn: "/signin"
       }
 })
 
