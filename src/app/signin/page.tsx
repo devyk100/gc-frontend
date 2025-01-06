@@ -1,0 +1,39 @@
+"use client"
+import { Button } from "@/components/ui/button"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Separator } from "@/components/ui/separator"
+import { SigninForm } from "@/components/ui/sign-in-form"
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/components/ui/tabs"
+import { signIn } from "next-auth/react"
+
+
+export default function SignInPage() {
+  return (
+    <section className="h-screen w-full flex items-center justify-center overflow-hidden rounded-xl">
+      <div className="dark:bg-zinc-900 md:block hidden bg-zinc-200 h-full w-full opacity-85">
+        GengoConnect
+      </div>
+      <div className=" h-full w-full flex items-center justify-center">
+        <div className="w-[90%] md:w-[70%] h-full flex flex-col items-center justify-center">
+          <h1 className="text-2xl font-bold">Sign in to your account</h1>
+          <h4 className="text-sm dark:text-zinc-400 text-zinc-600">Enter your credentials to sign in to your account</h4>
+          <SigninForm />
+        </div>
+      </div>
+    </section>
+  )
+}
