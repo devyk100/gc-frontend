@@ -1,11 +1,12 @@
-"use client"
+
 import { Button } from "@/components/ui/button";
-import {signIn} from "next-auth/react"
-import Link from "next/link";
-export default function Home() {
+import { prisma } from "@/lib/prisma";
+export default async function Home() {
+  const resp = await prisma.user.findMany({});
+  console.log(resp)
   return (
     <main>
-      <Button variant={"default"} onClick={() => signIn("google")}>
+      <Button variant={"default"}>
 
         Hello from the GengouConnect app
       </Button>

@@ -9,8 +9,14 @@ generator client {
 }
 
 datasource db {
-  provider = "cockroachdb"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+enum AuthType {
+  Google
+  Github
+  Email
 }
 
 model User {
@@ -20,4 +26,5 @@ model User {
   name        String
   email       String @unique
   picture     String
+  authType    AuthType
 }

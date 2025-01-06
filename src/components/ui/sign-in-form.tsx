@@ -48,9 +48,6 @@ export function SigninForm(){
                 <FormControl>
                   <Input placeholder="johndoe@mail.com" {...field} />
                 </FormControl>
-                {/* <FormDescription>
-                  This is your public display name.
-                </FormDescription> */}
                 <FormMessage />
               </FormItem>
             )}
@@ -64,9 +61,6 @@ export function SigninForm(){
                 <FormControl>
                   <Input placeholder="your secret password" {...field} />
                 </FormControl>
-                {/* <FormDescription>
-                  This is your public display name.
-                </FormDescription> */}
                 <FormMessage />
               </FormItem>
             )}
