@@ -12,3 +12,19 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+enum AuthType {
+  Google
+  Github
+  Email
+}
+
+model User {
+  id    String   @id @default(uuid())
+  username    String   @unique
+  password    String
+  name        String
+  email       String @unique
+  picture     String
+  authType    AuthType
+}
