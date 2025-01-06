@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Separator } from "./separator"
+import { signIn } from "next-auth/react"
 
 const formSchema = z.object({
     email: z.string().min(5).max(50).email({
@@ -76,7 +77,9 @@ export function SigninForm(){
                 <span className="text-sm mx-2 text-zinc-500">OR CONTINUE WITH</span>
                 <Separator className="flex-1"/>
             </div>
-            <Button variant={"outline"}><Image src="/google.svg" alt="Logo" width={20} height={20} />Google</Button>
+            <Button variant={"outline"} type="button" onClick={() => signIn("google")}>
+                <Image src="/google.svg" alt="Logo" width={20} height={20} />Google
+            </Button>
         </form>
       </Form>
     )
