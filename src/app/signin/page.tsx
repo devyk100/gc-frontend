@@ -1,6 +1,7 @@
 "use client"
 import { Button } from "@/components/ui/button"
 import { SigninForm } from "@/components/ui/sign-in-form"
+import Image from "next/image"
 import Link from "next/link"
 
 
@@ -8,7 +9,7 @@ export default function SignInPage() {
   return (
     <section className="h-screen w-full flex items-center justify-center overflow-hidden rounded-xl">
       <div className="dark:bg-zinc-900 md:block hidden bg-zinc-200 h-full w-full opacity-85">
-        GengoConnect
+        <Image src={"/sign-in-bg.svg"} alt="" height={100} width={100} className="w-full h-full object-cover"/>
       </div>
       <div className=" h-full w-full flex items-center justify-center relative">
         <div className="w-[90%] md:w-[70%] h-full flex flex-col items-center justify-center">
