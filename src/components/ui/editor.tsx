@@ -1,13 +1,15 @@
 "use client"
 
 import { Color } from '@tiptap/extension-color'
-import Image from '@tiptap/extension-image'
+import ImageTipTapExtension from '@tiptap/extension-image'
 import ListItem from '@tiptap/extension-list-item'
 import TextStyle from '@tiptap/extension-text-style'
 import { EditorProvider, useCurrentEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import React from 'react'
 import { Button } from './button'
+import Image from 'next/image'
+import EditorButton from './editor-button'
 
 const MenuBar = () => {
   const { editor } = useCurrentEditor()
@@ -26,8 +28,8 @@ const MenuBar = () => {
   return (
     <div className="control-group">
       <div className="Button-group">
-      <Button onClick={addImage}>Add image from URL</Button>
-        <Button
+        <EditorButton onClick={addImage} height={10} width={10} src='/editor/image.svg' imageClassName='w-4'/>
+        <EditorButton height={10} src='/editor/bold.svg' width={10}
           onClick={() => editor.chain().focus().toggleBold().run()}
           disabled={
             !editor.can()
@@ -36,11 +38,9 @@ const MenuBar = () => {
               .toggleBold()
               .run()
           }
-          className={editor.isActive('bold') ? 'is-active' : ''}
-        >
-          Bold
-        </Button>
-        <Button
+          isActive={() => editor.isActive('bold')}
+        />
+        <EditorButton height={10} width={10} src='/editor/italic.svg'
           onClick={() => editor.chain().focus().toggleItalic().run()}
           disabled={
             !editor.can()
@@ -49,11 +49,9 @@ const MenuBar = () => {
               .toggleItalic()
               .run()
           }
-          className={editor.isActive('italic') ? 'is-active' : ''}
-        >
-          Italic
-        </Button>
-        <Button
+          isActive={() => editor.isActive("italic")}
+        />
+        <EditorButton height={30} width={30} src='/editor/strikethrough.svg'
           onClick={() => editor.chain().focus().toggleStrike().run()}
           disabled={
             !editor.can()
@@ -62,11 +60,10 @@ const MenuBar = () => {
               .toggleStrike()
               .run()
           }
-          className={editor.isActive('strike') ? 'is-active' : ''}
-        >
-          Strike
-        </Button>
-        <Button
+          imageClassName='w-4'
+          isActive={() => editor.isActive('strike')}
+        />
+        <EditorButton height={10} src='/editor/code.svg' width={10}
           onClick={() => editor.chain().focus().toggleCode().run()}
           disabled={
             !editor.can()
@@ -75,89 +72,70 @@ const MenuBar = () => {
               .toggleCode()
               .run()
           }
-          className={editor.isActive('code') ? 'is-active' : ''}
-        >
-          Code
-        </Button>
-        <Button onClick={() => editor.chain().focus().unsetAllMarks().run()}>
-          Clear marks
-        </Button>
-        <Button onClick={() => editor.chain().focus().clearNodes().run()}>
-          Clear nodes
-        </Button>
-        <Button
+          imageClassName='w-4'
+          isActive={() => editor.isActive('code')}
+        />
+        <EditorButton height={10} src='/editor/paragraph.svg' width={10}
           onClick={() => editor.chain().focus().setParagraph().run()}
+          isActive={() => editor.isActive('paragraph')}
           className={editor.isActive('paragraph') ? 'is-active' : ''}
-        >
-          Paragraph
-        </Button>
-        <Button
+          imageClassName='w-4'
+        />
+        <EditorButton height={10} src='/editor/h1.svg' width={10}
+          imageClassName='w-4'
           onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
-          className={editor.isActive('heading', { level: 1 }) ? 'is-active' : ''}
-        >
-          H1
-        </Button>
-        <Button
+          isActive={() => editor.isActive('heading', {level: 1})}
+        />
+        <EditorButton height={10} src='/editor/h2.svg' width={10}
+          imageClassName='w-4'
           onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
-          className={editor.isActive('heading', { level: 2 }) ? 'is-active' : ''}
-        >
-          H2
-        </Button>
-        <Button
+          isActive={() => editor.isActive('heading', {level: 2})}
+        />
+        <EditorButton height={10} src='/editor/h3.svg' width={10}
+          imageClassName='w-4'
           onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
-          className={editor.isActive('heading', { level: 3 }) ? 'is-active' : ''}
-        >
-          H3
-        </Button>
-        <Button
+          isActive={() => editor.isActive('heading', {level: 3})}
+        />
+        <EditorButton height={10} src='/editor/h4.svg' width={10}
+          imageClassName='w-4'
           onClick={() => editor.chain().focus().toggleHeading({ level: 4 }).run()}
-          className={editor.isActive('heading', { level: 4 }) ? 'is-active' : ''}
-        >
-          H4
-        </Button>
-        <Button
+          isActive={() => editor.isActive('heading', {level: 4})}
+        />
+        <EditorButton height={10} src='/editor/h5.svg' width={10}
+          imageClassName='w-4'
           onClick={() => editor.chain().focus().toggleHeading({ level: 5 }).run()}
-          className={editor.isActive('heading', { level: 5 }) ? 'is-active' : ''}
-        >
-          H5
-        </Button>
-        <Button
+          isActive={() => editor.isActive('heading', {level: 5})}
+        />
+        <EditorButton height={10} src='/editor/h6.svg' width={10}
+          imageClassName='w-4'
           onClick={() => editor.chain().focus().toggleHeading({ level: 6 }).run()}
-          className={editor.isActive('heading', { level: 6 }) ? 'is-active' : ''}
-        >
-          H6
-        </Button>
-        <Button
+          isActive={() => editor.isActive('heading', {level: 6})}
+        />
+        <EditorButton height={10} src='/editor/bullet-list.svg' width={10}
           onClick={() => editor.chain().focus().toggleBulletList().run()}
-          className={editor.isActive('bulletList') ? 'is-active' : ''}
-        >
-          Bullet list
-        </Button>
-        <Button
+          isActive={() => editor.isActive('bulletlist')}
+        />
+        
+        <EditorButton height={10} src='/editor/ordered-list.svg' width={10}
           onClick={() => editor.chain().focus().toggleOrderedList().run()}
-          className={editor.isActive('orderedList') ? 'is-active' : ''}
-        >
-          Ordered list
-        </Button>
-        <Button
+          isActive={() => editor.isActive('orderedList')}
+        />
+        
+        <EditorButton height={10} src='/editor/code-block.svg' width={10}
           onClick={() => editor.chain().focus().toggleCodeBlock().run()}
-          className={editor.isActive('codeBlock') ? 'is-active' : ''}
-        >
-          Code block
-        </Button>
-        <Button
+          isActive={() => editor.isActive('codeBlock')}
+        />
+        
+        <EditorButton height={10} src='/editor/block-quote.svg' width={10}
           onClick={() => editor.chain().focus().toggleBlockquote().run()}
-          className={editor.isActive('blockquote') ? 'is-active' : ''}
-        >
-          Blockquote
-        </Button>
-        <Button onClick={() => editor.chain().focus().setHorizontalRule().run()}>
-          Horizontal rule
-        </Button>
-        <Button onClick={() => editor.chain().focus().setHardBreak().run()}>
-          Hard break
-        </Button>
-        <Button
+          isActive={() => editor.isActive('blockquote')}
+        />
+        
+        <EditorButton height={10} src='/editor/horizontal-rule.svg' width={10} onClick={() => editor.chain().focus().setHorizontalRule().run()}/>
+        
+        {/* <EditorButton height={10} src='/editor/bullet-list.svg' width={10} onClick={() => editor.chain().focus().setHardBreak().run()} /> */}
+        
+        <EditorButton height={10} src='/editor/undo.svg' width={10}
           onClick={() => editor.chain().focus().undo().run()}
           disabled={
             !editor.can()
@@ -166,10 +144,8 @@ const MenuBar = () => {
               .undo()
               .run()
           }
-        >
-          Undo
-        </Button>
-        <Button
+        />
+        <EditorButton height={10} src='/editor/redo.svg' width={10}
           onClick={() => editor.chain().focus().redo().run()}
           disabled={
             !editor.can()
@@ -178,15 +154,13 @@ const MenuBar = () => {
               .redo()
               .run()
           }
-        >
-          Redo
-        </Button>
-        <Button
+        />
+        
+        <EditorButton height={10} src='/editor/purple.svg' width={10}
           onClick={() => editor.chain().focus().setColor('#958DF1').run()}
-          className={editor.isActive('textStyle', { color: '#958DF1' }) ? 'is-active' : ''}
-        >
-          Purple
-        </Button>
+          isActive={() => editor.isActive('textStyle', { color: '#958DF1' })}
+        />
+        
       </div>
     </div>
   )
@@ -206,7 +180,7 @@ const extensions = [
       keepAttributes: false, // TODO : Making this as `false` becase marks are not preserved when I try to preserve attrs, awaiting a bit of help
     },
   }),
-  Image.configure({allowBase64: true})
+  ImageTipTapExtension.configure({allowBase64: true})
 ]
 
 const content = `
