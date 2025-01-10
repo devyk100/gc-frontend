@@ -21,8 +21,8 @@ const EditorButton: React.FC<EditorButtonProps> = ({
     ...props
 })  => {
     return (<>
-        <Button className={cn("bg-transparent dark:border-zinc-700 border-zinc-300 hover:bg-green-400 dark:hover:bg-green-700", className, isActive? (isActive() ? "bg-green-400 dark:bg-green-700":""): "")} {...props}>
-            <Image src={src} alt={src} width={width} height={height} className={cn('object-cover w-3 h-3 dark:invert', imageClassName)} />
+        <Button className={cn("bg-transparent dark:border-zinc-700 border-zinc-300 hover:bg-green-400 w-[45px] h-[35px] md:w-[50px] md:h-[40px] dark:hover:bg-green-700", className, isActive? (isActive() ? "bg-green-400 dark:bg-green-700":""): "")} {...props}>
+            <Image src={src} alt={src} width={width} height={height} className={cn('object-cover w-[15px] h-[15px] md:w-[18px] md:h-[18px] dark:invert', imageClassName)} />
         </Button>
     </>)
 }

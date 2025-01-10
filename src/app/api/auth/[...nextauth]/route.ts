@@ -1,6 +1,9 @@
-import { signUpActionFromGoogleFlow } from "@/actions/sign-up"
+import { credentialsSignIn } from "@/actions/sign-in"
+import { signUpActionFromGithubFlow, signUpActionFromGoogleFlow } from "@/actions/sign-up"
+import { randomUUID } from "crypto"
 import NextAuth from "next-auth"
-
+import CredentialsProvider from "next-auth/providers/credentials"
+import GithubProvider from "next-auth/providers/github"
 import GoogleProvider from "next-auth/providers/google"
 
 const handler = NextAuth({
@@ -8,12 +11,48 @@ const handler = NextAuth({
         GoogleProvider({
             clientId: process.env.GOOGLE_CLIENT_ID as string,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET as string
+        }),
+        CredentialsProvider({
+          // name: "Credentials",
+          credentials: {
+            email: {label: "Email", type: "email", placeholder: "johndoe@mail.com"},
+            password: {label:"Password", type: "password"}
+          },
+          async authorize(credentials, req) {
+            console.log("from inside of the credentials provider", credentials, req)
+            const user = await credentialsSignIn({
+              email: credentials?.email as string,
+              password: credentials?.password as string
+            })
+            if(user.success) {
+              console.log("Signi n success")
+              return {
+                id: user.id!,
+                name: user.name!,
+                email: user.email!,
+                image: user.picture!
+              }
+            }
+            return null;
+          },
+        }),
+        GithubProvider({
+          clientId: process.env.GITHUB_CLIENT_ID!,
+          clientSecret: process.env.GITHUB_CLIENT_SECRET!,
         })
     ],
     callbacks: {
         async signIn({ user, account, profile, email, credentials }) {
           if(account?.provider == "google"){
             const canProceed = await signUpActionFromGoogleFlow({
+              email: user.email!,
+              name: user.name!,
+              image: user.image!
+            })
+            return canProceed;
+          }
+          if(account?.provider == "github"){
+            const canProceed = await signUpActionFromGithubFlow({
               email: user.email!,
               name: user.name!,
               image: user.image!

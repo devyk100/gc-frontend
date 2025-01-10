@@ -47,7 +47,7 @@ export async function signUpActionFromGoogleFlow({email, name, image}: {
         await prisma.user.findUniqueOrThrow({
             where: {
                 email: email,
-                authType: "Google"
+                // authType: "Google" // allow users from anywhere, even github or google to log in to this, with same email id
             }
         })
         return true;
@@ -56,6 +56,40 @@ export async function signUpActionFromGoogleFlow({email, name, image}: {
             const user = await prisma.user.create({
                 data: {
                     authType: "Google",
+                    email: email,
+                    name: name,
+                    password: "",
+                    picture: image,
+                    username: randomUUID().toString()
+                }
+            })
+            console.log("created", user)
+            return true;
+        } catch(error) {
+            return false
+        }
+    }
+}
+
+export async function signUpActionFromGithubFlow({email, name, image}: {
+    email: string,
+    name: string,
+    image: string
+}): Promise<boolean> {
+    try {
+        // email is always unique, so it throws error only if it is not present
+        await prisma.user.findUniqueOrThrow({
+            where: {
+                email: email,
+                // authType: "Github" // allow users from same email id with any other platform account
+            }
+        })
+        return true;
+    } catch (error) {
+        try {
+            const user = await prisma.user.create({
+                data: {
+                    authType: "Github",
                     email: email,
                     name: name,
                     password: "",

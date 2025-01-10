@@ -3,6 +3,7 @@ import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { Button } from "@/components/ui/button"
+import axios from "axios"
 import {
     Form,
     FormControl,
@@ -18,40 +19,54 @@ import { signUpActionFromForm } from "@/actions/sign-up"
 import { toast } from "sonner"
 import { redirect } from "next/navigation"
 
+// const AWS_LAMBDA_URL = process.env.AWS_LAMBDA_URL as string; // find a solution to load these env variables on the client side
+const AWS_LAMBDA_URL="https://a88yce22q3.execute-api.ap-south-1.amazonaws.com/Prod";
 
 const formSchema = z.object({
     name: z.string().min(2, { message: "Must contain atleast 2 characters" }),
     email: z.string().min(5, { message: "Must contain atleast 5 characters" }).max(50).email({
         message: "It should be a valid email"
     })
-        .refine(async (value) => !await debouncedEmailTakenCheck(value), 'This email id is already used.'),
+    .refine(async (value) => !await emailTakenCheck(value), 'This email id is already used.'),
     password: z.string().min(8, { message: "Must contain atleast 8 characters" }).max(20),
     confirmPassword: z.string().min(8, { message: "Must contain atleast 8 characters" }).max(20),
     username: z.string().min(5, { message: "Must contain atleast 5 characters" }).max(15)
-        .regex(/^[a-zA-Z0-9_]+$/, "Username can only contain letters, numbers, and underscores")
-        .refine(async (value) => await debouncedUsernameAvailableCheck(value), 'This username has been already taken.')
-
+    .regex(/^[a-zA-Z0-9_]+$/, "Username can only contain letters, numbers, and underscores")
+    .refine(async (value) => {
+        const isAvailable =  await usernameAvailableCheck(value)
+        return isAvailable;
+    }, 'This username has been already taken.')
+    
 })
-    .refine((data) => data.password == data.confirmPassword, {
-        path: ["confirmPassword"],
-        message: "The passwords do not match"
-    })
+.refine((data) => data.password == data.confirmPassword, {
+    path: ["confirmPassword"],
+    message: "The passwords do not match"
+})
 
-const debouncedUsernameAvailableCheck = debounce(async (username: string) => {
-    return true;
-    if (!username) return true;
-    const response = await fetch(`/api/check-username?username=${username}`);
-    const data = await response.json();
-    return data.available; // true if available
-}, 500);
+const usernameAvailableCheck = async (username: string) => {
+    console.log(username, "IS THE ONE FROM DEBOUNCE")
+    try {
+        const response = await axios.post(`${AWS_LAMBDA_URL}/username-available`, {
+            username
+        });
+        return response.data.success;
+    } catch (error) {
+        console.log(error, "IS THE ERROR")
+        return false
+    }
+}
 
-const debouncedEmailTakenCheck = debounce(async (email: string) => {
-    return false;
-    if (!email) return true;
-    const response = await fetch(`/api/check-email?email=${email}`);
-    const data = await response.json();
-    return data.taken; // true if already taken
-}, 500);
+const emailTakenCheck = async (email: string) => {
+    try {
+        const response = await axios.post(`${AWS_LAMBDA_URL}/email-taken`, {
+            email
+        });
+        return response.data.success;
+    } catch (error) {
+        console.log(error, "IS THE ERROR")
+        return false
+    }
+}
 
 
 export function SignUpForm() {
