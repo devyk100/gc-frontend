@@ -6,6 +6,7 @@ import ListItem from '@tiptap/extension-list-item'
 import TextStyle from '@tiptap/extension-text-style'
 import { EditorProvider, useCurrentEditor, useEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
+import ImageResize from 'tiptap-extension-resize-image';
 import React, { useState } from 'react'
 import { Button } from './button'
 import Image from 'next/image'
@@ -24,9 +25,8 @@ const MenuBar = () => {
   const addImage = () => {
     // add complete functionality to check the user and upload the image here itself to the cloud
     const url = window.prompt('URL')
-    if (url) {  
-      editor.chain().focus().setImage({ src: url, alt: url, title:"" }).run().valueOf
-      // editor.view.pasteHTML(`<img src="${url}" alt="Girl in a jacket" width="500" height="600">`)
+    if (url) { 
+      editor.chain().focus().setImage({ src: url, alt: url, title:"" }).run()
     }
   }
   return (
@@ -193,7 +193,8 @@ const extensions = [
       keepAttributes: false, // TODO : Making this as `false` becase marks are not preserved when I try to preserve attrs, awaiting a bit of help
     },
   }),
-  ImageTipTapExtension.configure({ allowBase64: true })
+  ImageTipTapExtension.configure({ allowBase64: true }),
+  ImageResize.configure({allowBase64: false})
 ]
 
 
