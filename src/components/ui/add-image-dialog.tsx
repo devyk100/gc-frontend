@@ -68,7 +68,9 @@ export function AddImageDialog({ editor }: {
             </span>
           </div>
         </div>
+
         <span>OR</span>
+
         <input type="file"
           className="w-full p-2 bg-zinc-900 rounded-lg"
           placeholder=""
@@ -90,6 +92,8 @@ export function AddImageDialog({ editor }: {
           }}
           multiple
         />
+
+        {/* preview of the images addeed */}
         {
           images.length > 0 ?
             <>
