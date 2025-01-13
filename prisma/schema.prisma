@@ -13,125 +13,125 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-  enum authType {
-    Google
-    Github
-    Email
-  }
+enum auth_type_t {
+  Google
+  Github
+  Email
+}
 
-  model User {
-    id Int @id @default(autoincrement())
-    username String @unique
-    password String
-    name String
-    email String @unique
-    picture String
-    auth_type authType
-    images Image[]
-    override_lesson_post_visibility OverrideLessonPostVisibility[]
-    override_lesson_post_permission OverrideLessonPostPermission[]
-    course_instructor_mapping CourseInstructorMapping[]
-    course_learner_mapping CourseLearnerMapping[]
-    override_live_class_visibility OverrideLiveClassVisibility[]
-    override_live_class_admin_permission OverrideLiveClassAdminPermission[]
-  }
+model User {
+  id                                   Int                                @id @default(autoincrement())
+  username                             String                             @unique
+  password                             String
+  name                                 String
+  email                                String                             @unique
+  picture                              String
+  auth_type                            auth_type_t
+  images                               Image[]
+  override_lesson_post_visibility      OverrideLessonPostVisibility[]
+  override_lesson_post_permission      OverrideLessonPostPermission[]
+  course_instructor_mapping            CourseInstructorMapping[]
+  course_learner_mapping               CourseLearnerMapping[]
+  override_live_class_visibility       OverrideLiveClassVisibility[]
+  override_live_class_admin_permission OverrideLiveClassAdminPermission[]
+}
 
-  model Image{
-    id Int @id @default(autoincrement())
-    associated_user Int
-    user User  @relation(fields: [associated_user], references: [id])
-    filename String @unique
-    associated_post Int
-    lesson_post LessonPost @relation(fields: [associated_post], references: [id])
-    is_uploaded Boolean
-  }
+model Image {
+  id              Int        @id @default(autoincrement())
+  associated_user Int
+  user            User       @relation(fields: [associated_user], references: [id])
+  filename        String     @unique
+  associated_post Int
+  lesson_post     LessonPost @relation(fields: [associated_post], references: [id])
+  is_uploaded     Boolean
+}
 
-  model LessonPost {
-    id Int @id @default(autoincrement())
-    created_by String
-    body String
-    user_id Int
-    status String
-    created_at DateTime
-    is_public Boolean
-    associated_course Int
-    course Course @relation(fields: [associated_course], references: [id])
-    images Image[]
-    override_lesson_post_visibility OverrideLessonPostVisibility[]
-    override_lesson_post_permission OverrideLessonPostPermission[]
-  }
+model LessonPost {
+  id                              Int                            @id @default(autoincrement())
+  created_by                      String
+  body                            String
+  user_id                         Int
+  status                          String
+  created_at                      DateTime
+  is_public                       Boolean
+  associated_course               Int
+  course                          Course                         @relation(fields: [associated_course], references: [id])
+  images                          Image[]
+  override_lesson_post_visibility OverrideLessonPostVisibility[]
+  override_lesson_post_permission OverrideLessonPostPermission[]
+}
 
-  model OverrideLessonPostVisibility {
-    id Int @id @default(autoincrement())
-    allowed_user Int
-    user User @relation(fields: [allowed_user], references: [id])
-    allowed_post_id Int
-    lesson_post LessonPost @relation(fields: [allowed_post_id], references: [id])
-    allowed Boolean
-  }
+model OverrideLessonPostVisibility {
+  id              Int        @id @default(autoincrement())
+  allowed_user    Int
+  user            User       @relation(fields: [allowed_user], references: [id])
+  allowed_post_id Int
+  lesson_post     LessonPost @relation(fields: [allowed_post_id], references: [id])
+  allowed         Boolean
+}
 
-  model OverrideLessonPostPermission {
-    id Int @id @default(autoincrement())
-    allowed_editor Int
-    user User @relation(fields: [allowed_editor], references: [id])
-    allowed_post_id Int
-    lesson_post LessonPost @relation(fields: [allowed_post_id], references: [id])
-    allowed Boolean
-  }
+model OverrideLessonPostPermission {
+  id              Int        @id @default(autoincrement())
+  allowed_editor  Int
+  user            User       @relation(fields: [allowed_editor], references: [id])
+  allowed_post_id Int
+  lesson_post     LessonPost @relation(fields: [allowed_post_id], references: [id])
+  allowed         Boolean
+}
 
-  model Course {
-    id Int @id @default(autoincrement())
-    name String
-    language String
-    description String
-    is_public Boolean
-    course_instructor_mapping CourseInstructorMapping[]
-    lesson_posts LessonPost[]
-    course_learner_mapping CourseLearnerMapping[]
-    live_class LiveClass[]
-  }
+model Course {
+  id                        Int                       @id @default(autoincrement())
+  name                      String
+  language                  String
+  description               String
+  is_public                 Boolean
+  course_instructor_mapping CourseInstructorMapping[]
+  lesson_posts              LessonPost[]
+  course_learner_mapping    CourseLearnerMapping[]
+  live_class                LiveClass[]
+}
 
-  model CourseInstructorMapping {
-    id Int @id @default(autoincrement())
-    instructor Int
-    user User @relation(fields: [instructor], references: [id])
-    course_id Int
-    course Course @relation(fields: [course_id], references: [id])
-  }
+model CourseInstructorMapping {
+  id         Int    @id @default(autoincrement())
+  instructor Int
+  user       User   @relation(fields: [instructor], references: [id])
+  course_id  Int
+  course     Course @relation(fields: [course_id], references: [id])
+}
 
-  model CourseLearnerMapping {
-    id Int @id @default(autoincrement())
-    learner Int
-    user User @relation(fields: [learner], references: [id])
-    course_id Int
-    course Course @relation(fields: [course_id], references: [id])
-  }
+model CourseLearnerMapping {
+  id        Int    @id @default(autoincrement())
+  learner   Int
+  user      User   @relation(fields: [learner], references: [id])
+  course_id Int
+  course    Course @relation(fields: [course_id], references: [id])
+}
 
-  model LiveClass {
-    id Int @id @default(autoincrement())
-    start_time DateTime
-    associated_course Int
-    course Course @relation(fields: [associated_course], references: [id])
-    name String
-    description String
-    reminder_message String
-    is_public Boolean
-    override_live_class_visibility OverrideLiveClassVisibility[]
-    override_live_class_admin_permission OverrideLiveClassAdminPermission[]
-  }
+model LiveClass {
+  id                                   Int                                @id @default(autoincrement())
+  start_time                           DateTime
+  associated_course                    Int
+  course                               Course                             @relation(fields: [associated_course], references: [id])
+  name                                 String
+  description                          String
+  reminder_message                     String
+  is_public                            Boolean
+  override_live_class_visibility       OverrideLiveClassVisibility[]
+  override_live_class_admin_permission OverrideLiveClassAdminPermission[]
+}
 
-  model OverrideLiveClassVisibility {
-    id Int @id @default(autoincrement())
-    learner Int
-    user User @relation(fields: [learner], references: [id])
-    live_class_id Int
-    live_class LiveClass @relation(fields: [live_class_id], references: [id])
-  }
+model OverrideLiveClassVisibility {
+  id            Int       @id @default(autoincrement())
+  learner       Int
+  user          User      @relation(fields: [learner], references: [id])
+  live_class_id Int
+  live_class    LiveClass @relation(fields: [live_class_id], references: [id])
+}
 
-  model OverrideLiveClassAdminPermission {
-    id Int @id @default(autoincrement())
-    instructor Int
-    user User @relation(fields: [instructor], references: [id])
-    live_class_id Int
-    live_class LiveClass @relation(fields: [live_class_id], references: [id])
-  }
+model OverrideLiveClassAdminPermission {
+  id            Int       @id @default(autoincrement())
+  instructor    Int
+  user          User      @relation(fields: [instructor], references: [id])
+  live_class_id Int
+  live_class    LiveClass @relation(fields: [live_class_id], references: [id])
+}

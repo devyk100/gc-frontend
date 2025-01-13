@@ -2,11 +2,22 @@ import { credentialsSignIn } from "@/actions/sign-in"
 import { signUpActionFromGithubFlow, signUpActionFromGoogleFlow } from "@/actions/sign-up"
 import { Console } from "console"
 import { randomUUID } from "crypto"
-import NextAuth from "next-auth"
+import NextAuth, { User } from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
 import GithubProvider from "next-auth/providers/github"
 import GoogleProvider from "next-auth/providers/google"
 import jwt from "jsonwebtoken"
+
+declare module "next-auth" {
+  interface Session {
+    user: {
+      email: string;
+      name?: string | null;
+      image?: string | null;
+      token?: string; // the new token property for this app, to communicate to the backend
+    };
+  }
+}
 
 const handler = NextAuth({
     providers: [
@@ -20,7 +31,7 @@ const handler = NextAuth({
             email: {label: "Email", type: "email", placeholder: "johndoe@mail.com"},
             password: {label:"Password", type: "password"}
           },
-          async authorize(credentials, req) {
+          authorize: async (credentials, req) => {
             console.log("from inside of the credentials provider", credentials, req)
             const user = await credentialsSignIn({
               email: credentials?.email as string,
@@ -29,11 +40,11 @@ const handler = NextAuth({
             if(user.success) {
               console.log("Signi n success")
               return {
-                id: user.id!,
-                name: user.name!,
-                email: user.email!,
-                image: user.picture!
-              }
+                id: user.username,
+                email: user.email,
+                image: user.picture,
+                name: user.name
+              } as User
             }
             return null;
           },
@@ -61,11 +72,6 @@ const handler = NextAuth({
             })
             return canProceed;
           }
-          // console.log("user", user)
-          // console.log("account", account)
-          // console.log("profile", profile)
-          // console.log("email", email)
-          // console.log("credentials", credentials)
           return true
         },
         async redirect({ url, baseUrl }) {

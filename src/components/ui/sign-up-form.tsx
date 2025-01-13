@@ -19,7 +19,7 @@ import { signUpActionFromForm } from "@/actions/sign-up"
 import { toast } from "sonner"
 import { redirect } from "next/navigation"
 
-const AWS_LAMBDA_URL = "http://127.0.0.1:8080"; // find a solution to load these env variables on the client side
+const AWS_LAMBDA_URL = "http://127.0.0.1:8082"; // find a solution to load these env variables on the client side
 // export const AWS_LAMBDA_URL="https://a88yce22q3.execute-api.ap-south-1.amazonaws.com/Prod";
 
 const formSchema = z.object({

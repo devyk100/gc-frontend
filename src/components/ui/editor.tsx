@@ -15,6 +15,9 @@ import { Separator } from './separator'
 import "./editor.css"
 import { AddImageDialog } from './add-image-dialog'
 
+export const AWS_LAMBDA_URL = "http://127.0.0.1:8082";
+export const AWS_CLOUDFRONT_URL = ""
+
 const MenuBar = () => {
   const { editor } = useCurrentEditor()
   const [isDocked, setIsDocked] = useState(false);
@@ -25,8 +28,8 @@ const MenuBar = () => {
   const addImage = () => {
     // add complete functionality to check the user and upload the image here itself to the cloud
     const url = window.prompt('URL')
-    if (url) { 
-      editor.chain().focus().setImage({ src: url, alt: url, title:"" }).run()
+    if (url) {
+      editor.chain().focus().setImage({ src: url, alt: url, title: "" }).run()
     }
   }
   return (
@@ -194,14 +197,15 @@ const extensions = [
     },
   }),
   ImageTipTapExtension.configure({ allowBase64: true }),
-  ImageResize.configure({allowBase64: false})
+  ImageResize.configure({ allowBase64: false })
 ]
+
 
 
 export default ({ content }: {
   content: string
 }) => {
-  const {editor} = useCurrentEditor()
+  const { editor } = useCurrentEditor()
   return (
     <div className='w-screen flex items-center justify-center flex-col'>
 
@@ -218,23 +222,28 @@ export default ({ content }: {
         onDrop={(e, s) => {
           console.log(e, s.content.content[0])
         }}
-        editorProps={{ 
+        editorProps={{
           attributes: { class: "px-4 p-2 min-h-[10vh] focus:border-none outline-none focus:outline-none caret-green-500 dark:bg-zinc-900 bg-zinc-100" },
-          handlePaste(v,e,slice){
-            for(let sl of slice.content.content){
-              if(sl.type.name == "image"){
-                // handling two types of image paste, one with src - https link, other with data-base64
-                console.log(sl.attrs)
+          handlePaste(v, e, slice) {
+            console.log(v)
+            console.log("\n\n\n")
+            console.log(e)
+            console.log("\n\n\n")
+            console.log(slice)
+            // for (let sl of slice.content.content) {
+            //   if (sl.type.name == "image") {
+            //     // handling two types of image paste, one with src - https link, other with data-base64
+            //     console.log(sl.attrs)
 
-                // the bottom never evaluates to tru
-                console.log("Found image, aborting paste")
-                return true
-              }
-            }
-            return false
+            //     // the bottom never evaluates to tru
+            //     console.log("Found image, aborting paste")
+            //     return true
+            //   }
+            // }
+            // return false
           }
-        }} 
-        
+        }}
+
         editorContainerProps={{ className: "h-full  w-screen md:max-w-[90vw] lg:max-w-[70vw] xl:max-w-[60vw] rounded-md border-[0.5px] dark:border-zinc-800 border-zinc-300" }}
         extensions={extensions}
         content={content}

@@ -6,13 +6,13 @@ export async function credentialsSignIn({ email, password }: {
     email: string;
     password: string;
 }): Promise<{
-    id?: string;
+    id?: number;
     name?: string;
     email?: string;
     password?: string;
     username?: string;
     picture?: string;
-    authType?: $Enums.AuthType;
+    auth_type?: $Enums.auth_type_t;
     success: boolean;
 }> {
     try {

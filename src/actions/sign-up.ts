@@ -23,7 +23,7 @@ export async function signUpActionFromForm({email, username, password, name}: {
                 password: hashedPassword,
                 picture: "",
                 username: username,
-                authType: "Email"
+                auth_type: "Email"
             }
         })
         return {
@@ -55,7 +55,7 @@ export async function signUpActionFromGoogleFlow({email, name, image}: {
         try {
             const user = await prisma.user.create({
                 data: {
-                    authType: "Google",
+                    auth_type: "Google",
                     email: email,
                     name: name,
                     password: "",
@@ -89,7 +89,7 @@ export async function signUpActionFromGithubFlow({email, name, image}: {
         try {
             const user = await prisma.user.create({
                 data: {
-                    authType: "Github",
+                    auth_type: "Github",
                     email: email,
                     name: name,
                     password: "",
