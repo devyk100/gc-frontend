@@ -19,8 +19,8 @@ import { signUpActionFromForm } from "@/actions/sign-up"
 import { toast } from "sonner"
 import { redirect } from "next/navigation"
 
-// const AWS_LAMBDA_URL = process.env.AWS_LAMBDA_URL as string; // find a solution to load these env variables on the client side
-const AWS_LAMBDA_URL="https://a88yce22q3.execute-api.ap-south-1.amazonaws.com/Prod";
+const AWS_LAMBDA_URL = "http://127.0.0.1:8080"; // find a solution to load these env variables on the client side
+// export const AWS_LAMBDA_URL="https://a88yce22q3.execute-api.ap-south-1.amazonaws.com/Prod";
 
 const formSchema = z.object({
     name: z.string().min(2, { message: "Must contain atleast 2 characters" }),

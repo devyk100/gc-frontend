@@ -7,8 +7,8 @@ import bcrypt from "bcrypt"
 export const dynamic = 'force-dynamic';
 
 export default async function Home() {
-  const resp = await prisma.user.findMany({});
-  console.log(resp)
+  // const resp = await prisma.user.findMany({});
+  // console.log(resp)
   const plainPassword = "mySecretPassword";
   const hashedPassword = await hashPassword(plainPassword);
 

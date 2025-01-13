@@ -1,10 +1,12 @@
 import { credentialsSignIn } from "@/actions/sign-in"
 import { signUpActionFromGithubFlow, signUpActionFromGoogleFlow } from "@/actions/sign-up"
+import { Console } from "console"
 import { randomUUID } from "crypto"
 import NextAuth from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
 import GithubProvider from "next-auth/providers/github"
 import GoogleProvider from "next-auth/providers/google"
+import jwt from "jsonwebtoken"
 
 const handler = NextAuth({
     providers: [
@@ -70,15 +72,22 @@ const handler = NextAuth({
           return baseUrl
         },
         async session({ session, token, user }) {
-          return session
+          const jwtToken = jwt.sign({
+            email: session.user?.email
+          }, process.env.NEXTAUTH_SECRET as string, {expiresIn: "1h"})
+          session.user!.token = jwtToken
+          return session;
         },
         async jwt({ token, user, account, profile, isNewUser }) {
-            // console.log(user, token, account, isNewUser)
+          // return {...token, ...user}
           return token
         }
       },
       pages: {
         signIn: "/signin"
+      },
+      session: {
+        strategy: 'jwt',
       }
 })
 
