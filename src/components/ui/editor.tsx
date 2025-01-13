@@ -14,6 +14,9 @@ import EditorButton from './editor-button'
 import { Separator } from './separator'
 import "./editor.css"
 import { AddImageDialog } from './add-image-dialog'
+import { Slabo_13px } from 'next/font/google'
+import { getImageUrlFromUrl } from '@/utility/image-handlers'
+import { getSession } from 'next-auth/react'
 
 export const AWS_LAMBDA_URL = "http://127.0.0.1:8082";
 export const AWS_CLOUDFRONT_URL = ""
@@ -225,22 +228,34 @@ export default ({ content }: {
         editorProps={{
           attributes: { class: "px-4 p-2 min-h-[10vh] focus:border-none outline-none focus:outline-none caret-green-500 dark:bg-zinc-900 bg-zinc-100" },
           handlePaste(v, e, slice) {
-            console.log(v)
-            console.log("\n\n\n")
-            console.log(e)
-            console.log("\n\n\n")
-            console.log(slice)
-            // for (let sl of slice.content.content) {
-            //   if (sl.type.name == "image") {
-            //     // handling two types of image paste, one with src - https link, other with data-base64
-            //     console.log(sl.attrs)
+            const imageSrcList: string[] = []
+            for (let sl of slice.content.content) {
+              if (sl.type.name == "image") {
+                // handling two types of image paste, one with src - https link, other with data-base64
+                imageSrcList.push(sl.attrs.src)
+                // return true
+              }
+            }
 
-            //     // the bottom never evaluates to tru
-            //     console.log("Found image, aborting paste")
-            //     return true
-            //   }
-            // }
-            // return false
+            if(imageSrcList.length == 0) return false;
+            
+            setTimeout(async () => {
+              const uploadList: Promise<string>[] = []
+              const userData = await getSession()
+              imageSrcList.map((src) => {
+                uploadList.push(getImageUrlFromUrl(src, userData!))
+              })
+              const newImageSrcs = await Promise.all(uploadList);
+              Array.from(v.dom.getElementsByTagName("img")).forEach((el) => {
+                el.src
+                for(let i = 0; i < newImageSrcs.length; i++){
+                  if(el.src == imageSrcList[i]){
+                    el.src = newImageSrcs[i]
+                  }
+                }
+              })
+            }, 0)
+            return false
           }
         }}
 

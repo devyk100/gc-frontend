@@ -14,10 +14,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import EditorButton from "./editor-button"
 import { useState } from "react"
-import axios from "axios"
-import { AWS_LAMBDA_URL } from "./editor"
 import { getSession } from "next-auth/react"
-import { Session } from "next-auth"
 import { getImageUrlFromFile, getImageUrlFromUrl } from "@/utility/image-handlers"
 
 type Image_t = {
