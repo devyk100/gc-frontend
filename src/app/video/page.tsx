@@ -12,7 +12,18 @@ export default function VideoTest() {
       connectionUrl: "ws://localhost:8443/ws",
       groupName: "example",
       password: "secret",
-      username: "bob"
+      username: "bob",
+      updateChatCallback: (chat, chatList) => {
+
+      },
+      changeCallTrackCallback: (mediaStreams) => {
+        console.log(remoteStreams)
+        console.log(remoteStreams)
+        setTimeout(() => {
+          setRemoteStreams((val) => [...val, ...mediaStreams])
+        }, 20000)
+        // remoteStreams.push(mediaStreams[0])
+      }
     })
     // })
   }, []);
@@ -32,17 +43,21 @@ export default function VideoTest() {
       <div>
         <h2>Remote Videos</h2>
         <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-          {remoteStreams.map((stream, index) => (
-            <video
+          {remoteStreams.map((stream, index) => {
+            console.log(stream, "FROM THE FRONTEND")
+            return <video
               key={index}
               autoPlay
               playsInline
               ref={(video) => {
-                if (video) video.srcObject = stream;
+                if (video && video.srcObject !== stream) {
+                  video.srcObject = stream;
+                }
+              
               }}
               style={{ width: '160px', height: '120px', margin: '5px' }}
             />
-          ))}
+})}
         </div>
       </div>
     </div>

@@ -1,4 +1,6 @@
 import { randomUUID } from "crypto";
+import { printCustomRoutes } from "next/dist/build/utils";
+import { WsService } from "./ws";
 
 enum WebSocketEventTypeEnum {
     ping="ping",
@@ -12,7 +14,8 @@ enum WebSocketEventTypeEnum {
     ice="ice",
     offer="offer",
     answer="answer",
-    requestStream="requestStream"
+    requestStream="requestStream",
+    request="request"
 }
 
 interface WebSocketEventType {
@@ -86,7 +89,7 @@ interface IceEvent extends WebSocketEventType {
 }
 
 interface RequestEvent extends WebSocketEventType {
-    request:("audio"|"video"|"video-low")[]
+    request: Record<string, ("audio"|"video"|"video-low")[]>
 }
 
 interface RequestStreamEvent extends WebSocketEventType, RequestEvent {
@@ -102,16 +105,22 @@ export class CallService {
     private verified: boolean;
     private userList: User[];
     private chatList: Chat[];
+    private peerConnections: Record<string, RTCPeerConnection>;
     private username: string;
     private password: string;
+    private iceCandidateQueues: Record<string, RTCIceCandidate[]>;
     private groupName: string;
-    private updateChatCallback: (newValue: Chat, list: Chat[]) => void
+    private updateChatCallback: (newValue: Chat, list: Chat[]) => void;
+    private changeCallTrackCallback: ((mediaStream: readonly MediaStream[]) => void);
 
-    constructor({connectionUrl, groupName, username, password, updateChatCallback} :{connectionUrl: string, groupName: string, username: string, password: string, updateChatCallback: (newValue: Chat, list: Chat[]) => void}) {
+    constructor({connectionUrl, groupName, username, password, updateChatCallback, changeCallTrackCallback} :{connectionUrl: string, groupName: string, username: string, password: string, updateChatCallback: (newValue: Chat, list: Chat[]) => void, changeCallTrackCallback: (mediaStream: readonly MediaStream[]) => void}) {
+        this.changeCallTrackCallback = changeCallTrackCallback;
         this.ws = new WebSocket(connectionUrl);
         this.groupName = groupName;
         this.updateChatCallback = updateChatCallback;
         this.verified = false;
+        this.peerConnections = {};
+        this.iceCandidateQueues = {};
         this.userList = [];
         this.chatList = [];
         this.username = username;
@@ -140,8 +149,20 @@ export class CallService {
             type: WebSocketEventTypeEnum.join,
             username: this.username
         }
+        
         this.ws.send(JSON.stringify(j));
     }
+
+    private sendDownTrackReq() {
+        const r: RequestEvent = {
+            type: WebSocketEventTypeEnum.request,
+            request: {
+                "": ["audio", "video"]
+            }
+        }
+        this.ws.send(JSON.stringify(r));
+    }
+    
     
     private onMessage = (event: MessageEvent) => {
         const eventData = JSON.parse(event.data) as WebsocketEvent;
@@ -150,6 +171,7 @@ export class CallService {
             case WebSocketEventTypeEnum.handshake: {
                 this.verified = true;
                 this.joinGroup()
+                this.sendDownTrackReq();
                 break;
             }
             case WebSocketEventTypeEnum.chat:
@@ -168,18 +190,84 @@ export class CallService {
             }
             case WebSocketEventTypeEnum.user: {
                 const {id, kind, permissions, type, username} = eventData as UserInfoEvent;
+                const user = {
+                    id,
+                    permissions,
+                    username
+                }
+                this.userList.push(user)
+                console.log(this.userList)
                 break;
             }
             case WebSocketEventTypeEnum.answer: {
-
+                
                 break;
             }
             case WebSocketEventTypeEnum.offer: {
-
+                const {id, kind, label,replace, sdp, source, username} = eventData as OfferEvent;
+                
+                const pc = new RTCPeerConnection({iceServers: [], bundlePolicy: "balanced", rtcpMuxPolicy: "require", iceCandidatePoolSize: 0});
+                this.peerConnections[id] = pc;
+                this.iceCandidateQueues[id] = [];
+                pc.ontrack = (event) => {
+                    if(event.streams && event.streams[0]) {
+                        this.changeCallTrackCallback(event.streams)
+                    } 
+                }
+                pc.onicecandidate = (event) => {
+                    console.log(event, "IS THE ICE CANDIDATE")
+                    if(!event.candidate) return
+                    this.ws.send(JSON.stringify({
+                        type: WebSocketEventTypeEnum.ice,
+                        id: id,
+                        candidate: (event.candidate),
+                    } as IceEvent))
+                }
+                
+                pc.onconnectionstatechange = (event) => {
+                    // console.log(event)
+                }
+                pc.onicecandidateerror = (event) => {
+                    // console.log(event)
+                }
+                pc.oniceconnectionstatechange = (event) => {
+                    // console.log(event)
+                }
+                pc.onconnectionstatechange = () => {
+                    // console.log(`Connection state for ${id}:`, pc.connectionState);
+                };
+                pc.onsignalingstatechange = () => {
+                    // console.log(`Signaling state for ${id}:`, pc.signalingState);
+                };
+                
+                (async (pc, id) => {
+                    console.log(pc.iceGatheringState, "Gathering state")
+                    console.log("setting remote desc", sdp)
+                    
+                    await pc.setRemoteDescription(new RTCSessionDescription({sdp: sdp, type: "offer"}))
+                    await new Promise((res, rej) => {
+                        this.iceCandidateQueues[id].forEach(async (candidate, index) => {
+                            console.log("Setting candidates,", candidate)
+                            await pc.addIceCandidate(candidate)
+                            if(index == this.iceCandidateQueues[id].length-1) res(2)
+                        })
+                    })
+                    const answer = await pc.createAnswer();
+                    await pc.setLocalDescription(answer)
+                    this.ws.send(JSON.stringify({
+                        type: WebSocketEventTypeEnum.answer,
+                        id: id,
+                        sdp: answer.sdp
+                    } as AnswerEvent))
+                })(pc, id)
+                setTimeout(() => {
+                    // pc.restartIce()
+                }, 10000)
                 break;
             }
             case WebSocketEventTypeEnum.ice: {
-
+                const {candidate, id, type} = eventData as IceEvent;
+                this.iceCandidateQueues[id].push(candidate);
                 break;
             }
             case WebSocketEventTypeEnum.ping: {
