@@ -114,8 +114,12 @@ model LiveClass {
   course                               Course                             @relation(fields: [associated_course], references: [id])
   name                                 String
   description                          String
+  length                                Int
   reminder_message                     String
   is_public                            Boolean
+  email                               String
+  password                            String
+  mod_password                        String
   override_live_class_visibility       OverrideLiveClassVisibility[]
   override_live_class_admin_permission OverrideLiveClassAdminPermission[]
 }

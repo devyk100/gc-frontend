@@ -1,11 +1,12 @@
 import Editor from '@/components/ui/editor';
+import { prisma } from '@/lib/prisma';
 
 
-export default function MyComponent() {
-  
-const content = `
+export default async function MyComponent() {
+
+  const content = `
 some trash inside
-`
+` 
   return (
     <Editor content={content} />
   )

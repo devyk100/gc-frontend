@@ -8,9 +8,18 @@ importers:
 
   .:
     dependencies:
+      '@dytesdk/react-ui-kit':
+        specifier: ^2.1.5
+        version: 2.1.5(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@dytesdk/react-web-core':
+        specifier: ^2.2.2
+        version: 2.2.2(react@19.0.0)
       '@hookform/resolvers':
         specifier: ^3.9.1
         version: 3.9.1(react-hook-form@7.54.2(react@19.0.0))
+      '@jitsi/react-sdk':
+        specifier: ^1.4.0
+        version: 1.4.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@prisma/client':
         specifier: 6.1.0
         version: 6.1.0(prisma@6.1.0)
@@ -86,6 +95,9 @@ importers:
       jsonwebtoken:
         specifier: ^9.0.2
         version: 9.0.2
+      lib-jitsi-meet:
+        specifier: ^1.0.6
+        version: 1.0.6
       lodash.debounce:
         specifier: ^4.0.8
         version: 4.0.8
@@ -169,6 +181,23 @@ packages:
   '@babel/runtime@7.26.0':
     resolution: {integrity: sha512-FDSOghenHTiToteC/QRlv2q3DhPZ/oOXTBoirfWNx1Cx3TMVcGWQtMMmQcSvb/JjpNeGzx8Pq/b4fKEJuWm1sw==}
     engines: {node: '>=6.9.0'}
+
+  '@dytesdk/react-ui-kit@2.1.5':
+    resolution: {integrity: sha512-3quvDD2IogyMBLTRBJ4KPrUQzBtMI9UnIN/PiLJ/o5h/9k0qwPu8BwBlt5/CVDyJdZdGke5VcR7kP4F2PYZXAA==}
+    peerDependencies:
+      react: '>=16.8.6'
+      react-dom: '>=16.8.6'
+
+  '@dytesdk/react-web-core@2.2.2':
+    resolution: {integrity: sha512-tI+gx0XmB8VKbaviPk9FH4Yq3E75lq4tSI/mSnyh/hp/ysc2mq+zVDmnNgvR4DniG4CL3zCDGpsro5E607WgZQ==}
+    peerDependencies:
+      react: '>=16.8.6'
+
+  '@dytesdk/ui-kit@2.1.5':
+    resolution: {integrity: sha512-kIxv108UADTwbP6JY/343VAESMKhyD3PDxj63Ln7YySA7mBugg2uW/mbE6NHphNDJoFEyLp2VRi3+Gly3/asMQ==}
+
+  '@dytesdk/web-core@2.2.2':
+    resolution: {integrity: sha512-ChbTQEApqpVJ67A7g06rg/txrA8jwmYAlZi9hHUOliKjX82NizOADlIO5j6jpyy+3De/ksmL/eqI5SehIqHBPw==}
 
   '@emnapi/runtime@1.3.1':
     resolution: {integrity: sha512-kEBmG8KyqtxJZv+ygbEim+KCGtIq1fC22Ms3S4ziXmYKm8uyoLX0MHONVKwp+9opg390VaKRNt4a7A9NwmpNhw==}
@@ -356,6 +385,12 @@ packages:
     resolution: {integrity: sha512-O8jcjabXaleOG9DQ0+ARXWZBTfnP4WNAqzuiJK7ll44AmxGKv/J2M4TPjxjY3znBCfvBXFzucm1twdyFybFqEA==}
     engines: {node: '>=12'}
 
+  '@jitsi/react-sdk@1.4.0':
+    resolution: {integrity: sha512-1dn3WIZNyRuESh5qvBR52PQz/avM0Wl575WtuW2sRaNemx38+I1eHJvA58SNhC3zas1PkxBfjeBqmTUHeJlaCw==}
+    peerDependencies:
+      react: 16 || 17 || 18
+      react-dom: 16 || 17 || 18
+
   '@jridgewell/gen-mapping@0.3.8':
     resolution: {integrity: sha512-imAbBGkb+ebQyxKgzv5Hu2nmROxoDOXHh80evxdoXNOrvAnVx7zimzc1Oo5h9RlfV4vPXaE2iM5pOFbvOCClWA==}
     engines: {node: '>=6.0.0'}
@@ -481,6 +516,9 @@ packages:
 
   '@prisma/get-platform@6.1.0':
     resolution: {integrity: sha512-ia8bNjboBoHkmKGGaWtqtlgQOhCi7+f85aOkPJKgNwWvYrT6l78KgojLekE8zMhVk0R9lWcifV0Pf8l3/15V0Q==}
+
+  '@protobuf-ts/runtime@2.9.4':
+    resolution: {integrity: sha512-vHRFWtJJB/SiogWDF0ypoKfRIZ41Kq+G9cEFj6Qm1eQaAhJ1LDFvgZ7Ja4tb3iLOQhz0PaoPnnOijF1qmEqTxg==}
 
   '@radix-ui/primitive@1.1.1':
     resolution: {integrity: sha512-SJ31y+Q/zAyShtXJc8x83i9TYdbAfHZ++tUZnvjJJqFjzsdUnKsxPL6IEtBlxKkU7yzer//GQtZSV4GbldL3YA==}
@@ -1238,6 +1276,9 @@ packages:
     resolution: {integrity: sha512-Ceh+7ox5qe7LJuLHoY0feh3pHuUDHAcRUeyL2VYghZwfpkNIy/+8Ocg0a3UuSoYzavmylwuLWQOf3hl0jjMMIw==}
     engines: {node: '>=8'}
 
+  bowser@2.11.0:
+    resolution: {integrity: sha512-AlcaJBi/pqqJBIQ8U9Mcpc9i8Aqxn88Skv5d+xBX006BY5u8N3mGLHa5Lgppa7L/HfwgwLgZ6NYs+Ag6uUmJRA==}
+
   brace-expansion@1.1.11:
     resolution: {integrity: sha512-iCuPHDFgrHX7H2vEI/5xpz07zSHB00TpugqhmYtVmMO6518mCuRMoOYFldEBl0g187ufozdaHgWKcYFb61qGiA==}
 
@@ -1640,6 +1681,10 @@ packages:
   fast-levenshtein@2.0.6:
     resolution: {integrity: sha512-DCXu6Ifhqcks7TZKY3Hxp3y6qphY5SJZmrWMDrKcERSOXWQdMhU9Ig/PYrzyw/ul9jOIyh0N4M0tbC5hodg8dw==}
 
+  fast-unique-numbers@8.0.13:
+    resolution: {integrity: sha512-7OnTFAVPefgw2eBJ1xj2PGGR9FwYzSUso9decayHgCDX4sJkHLdcsYTytTg+tYv+wKF3U8gJuSBz2jJpQV4u/g==}
+    engines: {node: '>=16.1.0'}
+
   fastq@1.18.0:
     resolution: {integrity: sha512-QKHXPW0hD8g4UET03SdOdunzSouc9N4AuHdsX8XNcTsuz+yYFILVNIX4l9yHABMhiEI9Db0JTTIpu0wB+Y1QQw==}
 
@@ -2013,6 +2058,10 @@ packages:
   levn@0.4.1:
     resolution: {integrity: sha512-+bT2uH4E5LGE7h/n3evcS/sQlJXCpIp6ym8OWJ5eV6+67Dsql/LaaT7qJBAt2rzfoa/5QBGBhxDix1dMt2kQKQ==}
     engines: {node: '>= 0.8.0'}
+
+  lib-jitsi-meet@1.0.6:
+    resolution: {integrity: sha512-Hnp8F7btmIFBGh5hgli1uTzb7c7IgWBgTMFu4GnSasE8sx23RcTerXBjH+XZcsGsxnoW3pFKlU77za1a0o3qhw==}
+    deprecated: Deprecated. lib-jitsi-meet is not distributed via npm, use the source.
 
   lilconfig@3.1.3:
     resolution: {integrity: sha512-/vlFKAoH5Cgt3Ie+JLhRbwOsCQePABiU3tJ1egGvyQ+33R/vcwM2Zl2QR/LzjsBeItPt3oSVXapn+m4nQDvpzw==}
@@ -2633,6 +2682,10 @@ packages:
   scheduler@0.25.0:
     resolution: {integrity: sha512-xFVuu11jh+xcO7JOAGJNOXld8/TcEHK/4CituBUeUb5hqxJLj9YuemAEuvm9gQ/+pgXYfbQuqAkiYu+u7YEsNA==}
 
+  sdp-transform@2.15.0:
+    resolution: {integrity: sha512-KrOH82c/W+GYQ0LHqtr3caRpM3ITglq3ljGUIb8LTki7ByacJZ9z+piSGiwZDsRyhQbYBOBJgr2k6X4BZXi3Kw==}
+    hasBin: true
+
   semver@6.3.1:
     resolution: {integrity: sha512-BR7VvDCVHO+q2xBEWskxS6DJE1qRnb7DxzUrogb71CWoSficBxYsiAGd+Kl0mmq/MprG9yArRkyrQxTO6XjMzA==}
     hasBin: true
@@ -2951,6 +3004,15 @@ packages:
     resolution: {integrity: sha512-BN22B5eaMMI9UMtjrGd5g5eCYPpCPDUy0FJXbYsaT5zYxjFOckS53SQDE3pWkVoWpHXVb3BrYcEN4Twa55B5cA==}
     engines: {node: '>=0.10.0'}
 
+  worker-timers-broker@6.1.8:
+    resolution: {integrity: sha512-FUCJu9jlK3A8WqLTKXM9E6kAmI/dR1vAJ8dHYLMisLNB/n3GuaFIjJ7pn16ZcD1zCOf7P6H62lWIEBi+yz/zQQ==}
+
+  worker-timers-worker@7.0.71:
+    resolution: {integrity: sha512-ks/5YKwZsto1c2vmljroppOKCivB/ma97g9y77MAAz2TBBjPPgpoOiS1qYQKIgvGTr2QYPT3XhJWIB6Rj2MVPQ==}
+
+  worker-timers@7.0.60:
+    resolution: {integrity: sha512-kom5j7+JQU0uuJAqAeFvxPpKlp21BH09YLMU/JLKA+0Zs3WTGk7WSBFYjdR3G+kjXr6qWD7zIcenv3oXaWBJzw==}
+
   wrap-ansi@7.0.0:
     resolution: {integrity: sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==}
     engines: {node: '>=10'}
@@ -2987,6 +3049,27 @@ snapshots:
   '@babel/runtime@7.26.0':
     dependencies:
       regenerator-runtime: 0.14.1
+
+  '@dytesdk/react-ui-kit@2.1.5(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
+    dependencies:
+      '@dytesdk/ui-kit': 2.1.5
+      react: 19.0.0
+      react-dom: 19.0.0(react@19.0.0)
+
+  '@dytesdk/react-web-core@2.2.2(react@19.0.0)':
+    dependencies:
+      '@dytesdk/web-core': 2.2.2
+      react: 19.0.0
+
+  '@dytesdk/ui-kit@2.1.5': {}
+
+  '@dytesdk/web-core@2.2.2':
+    dependencies:
+      '@protobuf-ts/runtime': 2.9.4
+      bowser: 2.11.0
+      sdp-transform: 2.15.0
+      uuid: 8.3.2
+      worker-timers: 7.0.60
 
   '@emnapi/runtime@1.3.1':
     dependencies:
@@ -3152,6 +3235,11 @@ snapshots:
       wrap-ansi: 8.1.0
       wrap-ansi-cjs: wrap-ansi@7.0.0
 
+  '@jitsi/react-sdk@1.4.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
+    dependencies:
+      react: 19.0.0
+      react-dom: 19.0.0(react@19.0.0)
+
   '@jridgewell/gen-mapping@0.3.8':
     dependencies:
       '@jridgewell/set-array': 1.2.1
@@ -3259,6 +3347,8 @@ snapshots:
   '@prisma/get-platform@6.1.0':
     dependencies:
       '@prisma/debug': 6.1.0
+
+  '@protobuf-ts/runtime@2.9.4': {}
 
   '@radix-ui/primitive@1.1.1': {}
 
@@ -4072,6 +4162,8 @@ snapshots:
 
   binary-extensions@2.3.0: {}
 
+  bowser@2.11.0: {}
+
   brace-expansion@1.1.11:
     dependencies:
       balanced-match: 1.0.2
@@ -4620,6 +4712,11 @@ snapshots:
 
   fast-levenshtein@2.0.6: {}
 
+  fast-unique-numbers@8.0.13:
+    dependencies:
+      '@babel/runtime': 7.26.0
+      tslib: 2.8.1
+
   fastq@1.18.0:
     dependencies:
       reusify: 1.0.4
@@ -5039,6 +5136,8 @@ snapshots:
     dependencies:
       prelude-ls: 1.2.1
       type-check: 0.4.0
+
+  lib-jitsi-meet@1.0.6: {}
 
   lilconfig@3.1.3: {}
 
@@ -5670,6 +5769,8 @@ snapshots:
 
   scheduler@0.25.0: {}
 
+  sdp-transform@2.15.0: {}
+
   semver@6.3.1: {}
 
   semver@7.6.3: {}
@@ -6090,6 +6191,25 @@ snapshots:
       string-width: 4.2.3
 
   word-wrap@1.2.5: {}
+
+  worker-timers-broker@6.1.8:
+    dependencies:
+      '@babel/runtime': 7.26.0
+      fast-unique-numbers: 8.0.13
+      tslib: 2.8.1
+      worker-timers-worker: 7.0.71
+
+  worker-timers-worker@7.0.71:
+    dependencies:
+      '@babel/runtime': 7.26.0
+      tslib: 2.8.1
+
+  worker-timers@7.0.60:
+    dependencies:
+      '@babel/runtime': 7.26.0
+      tslib: 2.8.1
+      worker-timers-broker: 6.1.8
+      worker-timers-worker: 7.0.71
 
   wrap-ansi@7.0.0:
     dependencies:
