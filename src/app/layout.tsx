@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import { Geist_Mono, Montserrat } from "next/font/google";
 import "./globals.css";
-import { NavigationMenuDemo } from "@/components/custom-navbar";
+import { NavigationMenuDemo } from "@/components/ui/custom-navbar";
 import { ThemeProvider } from "@/components/providers/theme-provider"
 import { Toaster } from "@/components/ui/sonner"
+import Navbar from "@/components/ui/navbar";
 
 const monsterratSans = Montserrat({
-  variable: "--font-montserrat-sans",
+  // variable: "--font-montserrat-sans",
   subsets: ["latin"],
 });
 
@@ -38,7 +39,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <NavigationMenuDemo></NavigationMenuDemo>
+          <Navbar />
           {children}
           <Toaster />
         </ThemeProvider>
