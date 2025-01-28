@@ -10,7 +10,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu"
-import Navbar from "./custom-navbar-2"
+import Navbar from "./navbar"
 
 const components: { title: string; href: string; description: string }[] = [
   {
