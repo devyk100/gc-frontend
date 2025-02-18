@@ -1,8 +1,6 @@
 import axios from "axios"
 import { Session } from "next-auth"
-
-export const AWS_LAMBDA_URL = "http://127.0.0.1:8082";
-export const AWS_CLOUDFRONT_URL = "https://d1j4tyxkh4y7ex.cloudfront.net/";
+import { AWS_CLOUDFRONT_URL, AWS_LAMBDA_URL } from "./urls"
 
 export const getImageUrlFromUrl = async (url: string, userData: Session): Promise<string> => {
     const lambdaResponse = await axios.post(AWS_LAMBDA_URL + "/upload-image-from-url", {
