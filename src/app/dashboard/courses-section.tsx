@@ -29,10 +29,14 @@ const courses = [
     }
 ]
 
+
+
 export default function CourseSection({className} :{ 
     className?: string
 }) {
     return (<div className={cn("", className)}>
-        <h1>🎓 Enrolled Courses</h1>
+                <h1 className="font-semibold text-2xl m-2 md:mt-10 w-full border-b-2 py-2">🎓 Enrolled Courses</h1>
+        <h1></h1>
+
     </div>)
 }

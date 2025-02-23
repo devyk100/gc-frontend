@@ -33,20 +33,15 @@ const classes: Class_t[] = [
 export default function ClassSection({className} :{ 
     className?: string
 }) {
-    return <div className={cn("w-full", className)}>
+    return <div className={cn("w-full relative", className)}>
         <h1 className="font-semibold text-2xl m-2 md:mt-10 w-full border-b-2 py-2">📅 Upcoming Live Classes</h1>
         <div className="flex flex-col">
 
             {classes.map((val) => <ClassCard duration={val.duration} id={val.id} key={val.id} instructor={val.instructor} instructor_img_url={val.instructor_img_url} name={val.name} start_time={val.start_time} />)}
-            <Button>Load more</Button>
+            <Button className="absolute bottom-[5%] left-[50%]" variant={"secondary"}>Load more</Button>
         </div>
     </div>
 }
-
-
-
-
-
 
 function ClassCard({
     duration,

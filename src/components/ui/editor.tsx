@@ -15,6 +15,7 @@ import { Separator } from './separator'
 import { AddImageDialog } from './add-image-dialog'
 import { getImageUrlFromUrl } from '@/utility/image-handlers'
 import { getSession } from 'next-auth/react'
+import { setAuthToken } from '@/utility/api-adapter'
 
 
 const MenuBar = () => {
@@ -280,7 +281,7 @@ export default ({ content }: {
               const uploadList: Promise<string>[] = []
               const userData = await getSession()
               imageSrcList.map((src) => {
-                uploadList.push(getImageUrlFromUrl(src, userData!))
+                uploadList.push(getImageUrlFromUrl(src))
               })
               const newImageSrcs = await Promise.all(uploadList);
               Array.from(v.dom.getElementsByTagName("img")).forEach((el) => {

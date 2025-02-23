@@ -5,6 +5,7 @@ import { NavigationMenuDemo } from "@/components/ui/custom-navbar";
 import { ThemeProvider } from "@/components/providers/theme-provider"
 import { Toaster } from "@/components/ui/sonner"
 import Navbar from "@/components/ui/navbar";
+import ReactQueryProvider from "@/components/providers/react-query-provider";
 
 const monsterratSans = Montserrat({
   // variable: "--font-montserrat-sans",
@@ -34,16 +35,19 @@ export default function RootLayout({
         className={`${monsterratSans.className} ${geistMono.variable} antialiased`}
       >
 
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <ReactQueryProvider>
+
             <Navbar />
             {children}
-            <Toaster />
-          </ThemeProvider>
+          </ReactQueryProvider>
+          <Toaster />
+        </ThemeProvider>
 
       </body>
     </html>

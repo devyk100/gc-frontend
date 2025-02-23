@@ -34,6 +34,7 @@ model User {
   course_learner_mapping               CourseLearnerMapping[]
   override_live_class_visibility       OverrideLiveClassVisibility[]
   override_live_class_admin_permission OverrideLiveClassAdminPermission[]
+  Course                               Course[]
 }
 
 model Image {
@@ -85,6 +86,9 @@ model Course {
   language                  String
   description               String
   is_public                 Boolean
+  img_url                   String
+  uid                       Int
+  user                      User                      @relation(fields: [uid], references: [id])
   course_instructor_mapping CourseInstructorMapping[]
   lesson_posts              LessonPost[]
   course_learner_mapping    CourseLearnerMapping[]
@@ -114,12 +118,12 @@ model LiveClass {
   course                               Course                             @relation(fields: [associated_course], references: [id])
   name                                 String
   description                          String
-  length                                Int
+  length                               Int
   reminder_message                     String
   is_public                            Boolean
-  email                               String
-  password                            String
-  mod_password                        String
+  email                                String
+  password                             String
+  mod_password                         String
   override_live_class_visibility       OverrideLiveClassVisibility[]
   override_live_class_admin_permission OverrideLiveClassAdminPermission[]
 }
