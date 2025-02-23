@@ -13,10 +13,10 @@ import { SessionProvider, signOut, useSession } from "next-auth/react"
 import { Avatar, AvatarFallback, AvatarImage } from "./avatar";
 
 const NavItems = [
-    { text: "Dashboard", href:"dashboard" },
-    { text: "Live Class", href:"schedule" },
-    { text: "Learn", href:"learn" },
-    { text: "Courses", href:"courses" }
+    { text: "Dashboard", href:"/dashboard" },
+    { text: "Live Class", href:"/instructors" },
+    { text: "Learn", href:"/learn" },
+    { text: "Courses", href:"/courses" }
 ]
 
 export default function Navbar() {

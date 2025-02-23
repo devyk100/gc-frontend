@@ -26,6 +26,8 @@ model User {
   name                                 String
   email                                String                             @unique
   picture                              String
+  description                          String                             @default("User of GengoConnect")
+  is_public                            Boolean                            @default(true)
   auth_type                            auth_type_t
   images                               Image[]
   override_lesson_post_visibility      OverrideLessonPostVisibility[]
@@ -49,14 +51,13 @@ model Image {
 
 model LessonPost {
   id                              Int                            @id @default(autoincrement())
-  created_by                      String
   body                            String
   user_id                         Int
-  status                          String
+  title String
   created_at                      DateTime
   is_public                       Boolean
-  associated_course               Int
-  course                          Course                         @relation(fields: [associated_course], references: [id])
+  associated_course               Int?
+  course                          Course?                         @relation(fields: [associated_course], references: [id])
   images                          Image[]
   override_lesson_post_visibility OverrideLessonPostVisibility[]
   override_lesson_post_permission OverrideLessonPostPermission[]
